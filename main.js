@@ -1,3 +1,4 @@
+// const screenSelector = document.querySelector('body');
 const menuEmail = document.querySelector('.navbar-email');
 const desktopMenu = document.querySelector('.desktop-menu');
 
@@ -5,58 +6,60 @@ const iconMenu = document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 
 const menuCarrito = document.querySelector('.navbar-shopping-cart');
-const aside = document.querySelector('.product-detail');
+const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
+
+const productDetailContainer = document.querySelector('#productDetail');
+const productDetailClose = document.querySelector('.product-detail-close');
 
 const cardsContainer = document.querySelector('.cards-container');
 
 
 // Toggle es para gestionar el estado
-menuEmail.addEventListener('click', toggleDesktopMenu);
 // Se usa toggle para ver si tiene o no tiene el evento y classlist para acceder
 // al listado de clases de desktop-menu
-function toggleDesktopMenu() {
-    // Primero consultamos si el aside está abierto ( abierto = no tiene inactive)
-    const isAsideOpen = !aside.classList.contains('inactive');
+// El menú carrito tiene conflicto con el menú ícono 
+// entonces antes de abrir el menú carrito hay que cerrar el menú ícono
 
-    // Si no tiene inactive, se lo añade para cerrarlo
-    if (isAsideOpen) {
-        aside.classList.add('inactive');
-    }
+// screenSelector.addEventListener('click', toggleScreenSelector);
+menuEmail.addEventListener('click', toggleDesktopMenu);
+iconMenu.addEventListener('click', toggleMobileMenu);
+menuCarrito.addEventListener('click', toggleOrderDetail);
+productDetailClose.addEventListener('click', closeProductDetail);
+
+// function toggleScreenSelector() {
+//     shoppingCartContainer.classList.add('inactive');
+//     productDetailContainer.classList.add('inactive');
+//     mobileMenu.classList.add('inactive');
+//     desktopMenu.classList.add('inactive');
+// }
+
+function toggleDesktopMenu() {
+    shoppingCartContainer.classList.add('inactive');
+    productDetailContainer.classList.add('inactive');
     desktopMenu.classList.toggle('inactive');
 }
 
-// El menú carrito tiene conflicto con el menú ícono 
-// entonces antes de abrir el menú ícono hay que cerrar el carrito
-iconMenu.addEventListener('click', toggleMobileMenu);
 function toggleMobileMenu() {
-    // Primero consultamos si el aside está abierto ( abierto = no tiene inactive)
-    const isAsideOpen = !aside.classList.contains('inactive');
-
-    // Si no tiene inactive, se lo añade para cerrarlo
-    if (isAsideOpen) {
-        aside.classList.add('inactive');
-    }
+    shoppingCartContainer.classList.add('inactive');
+    productDetailContainer.classList.add('inactive');
     mobileMenu.classList.toggle('inactive');
 }
 
-// El menú carrito tiene conflicto con el menú ícono 
-// entonces antes de abrir el menú carrito hay que cerrar el menú ícono
-menuCarrito.addEventListener('click', toggleAside);
-function toggleAside() {
-    // Primero consultamos si el menú movil está abierto ( abierto = no tiene inactive)
-    const isMobileMenuOpen = !mobileMenu.classList.contains('inactive');
-    // Si no tiene inactive, se lo añade para cerrarlo
-    if (isMobileMenuOpen) {
-        mobileMenu.classList.add('inactive');
-    }
+function toggleOrderDetail() {
+    mobileMenu.classList.add('inactive');
+    desktopMenu.classList.add('inactive');
+    productDetailContainer.classList.add('inactive');
+    shoppingCartContainer.classList.toggle('inactive'); 
+}
 
-    const isMenuDesktopOpen = !desktopMenu.classList.contains('inactive');
-    // Si no tiene inactive, se lo añade para cerrarlo
-    if (isMenuDesktopOpen) {
-        desktopMenu.classList.add('inactive');
-    }
-    // Hacemos el toggle del inactive para el aside
-    aside.classList.toggle('inactive'); 
+function openProductDetail() {
+    mobileMenu.classList.add('inactive');
+    desktopMenu.classList.add('inactive');
+    shoppingCartContainer.classList.add('inactive');
+    productDetailContainer.classList.remove('inactive');
+}
+function closeProductDetail() {
+    productDetailContainer.classList.add('inactive');
 }
 
 const productList = [];
@@ -115,6 +118,7 @@ function renderProducts(array) {
         // open-close <img>
         const productImg = document.createElement('img');
         productImg.setAttribute('src', product.image);
+        productImg.addEventListener('click', openProductDetail);
 
         // open: <div class="product-info">
         const productInfo = document.createElement('div');
