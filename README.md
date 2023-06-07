@@ -22,6 +22,6 @@ Se puede acceder mediante el archivo index.html
 </p>
 
 <p align="center">
-  <img src="assets/Mobile-marketplace.png" height= "800px" alt="Mobile-marketplace.png">
+  <img src="assets/Mobile-marketplace.png" height= "400px" alt="Mobile-marketplace.png">
   <p align="center">Vista del Marketplace para mobile</p>
 </p>
